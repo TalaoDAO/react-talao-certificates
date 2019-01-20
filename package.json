@@ -1,6 +1,6 @@
 {
   "name": "react-openbadges",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "React component to display and verify Openbadges.org badges",
   "main": "dist/index.js",
   "scripts": {
