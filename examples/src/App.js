@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { AppBar, Button, Grid, Toolbar, Typography } from '@material-ui/core';
-import OpenbadgeFromUrl from '../../src/OpenbadgeFromUrl';
+import TalaocertificateFromUrl from '../../src/TalaocertificateFromUrl';
 
 export default class App extends Component {
   render() {
@@ -15,7 +15,7 @@ export default class App extends Component {
             </Button>
           </Toolbar>
         </AppBar>
-        <OpenbadgeFromUrl
+        <TalaocertificateFromUrl
           url="https://raw.githubusercontent.com/TalaoDAO/react-talao-certificates/master/examples/data/example.json"
           download={true} />
       </Fragment>
