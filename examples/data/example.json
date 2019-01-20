@@ -1,0 +1,31 @@
+{
+  "@context": "https://w3id.org/openbadges/v2",
+  "id": "https://example.org/assertions/123",
+  "type": "Assertion",
+  "recipient": {
+    "type": "email",
+    "identity": "guillaume.duveau@gmail.com",
+    "name": "Guillaume Duveau"
+  },
+  "issuedOn": "2019-01-18T12:43:01.655Z",
+  "verification": {
+    "type": "hosted"
+  },
+  "badge": {
+    "type": "BadgeClass",
+    "id": "https://example.org/badges/5",
+    "name": "Badge title",
+    "description": "Badge description",
+    "image": "Badge image",
+    "issuer": {
+      "id": "https://example.org/issuer",
+      "type": "Profile",
+      "name": "Issuer name",
+      "url": "Issuer url",
+      "email": "Issuer email",
+      "verification": {
+        "allowedOrigins": "example.org"
+      }
+    }
+  }
+}
