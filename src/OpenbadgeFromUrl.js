@@ -1,8 +1,10 @@
+import 'babel-polyfill';
 import React, { Component, } from 'react';
 import PropTypes from 'prop-types';
-import { Typography } from '@material-ui/core';
+import { Card, CardHeader, CircularProgress } from '@material-ui/core';
+import Openbadge from './Openbadge';
 
-export default class OpenbadgeFromUrl {
+export default class OpenbadgeFromUrl extends Component {
 
   constructor (props) {
     super (props);
@@ -11,8 +13,12 @@ export default class OpenbadgeFromUrl {
     }
   }
 
-  async componentDidMount() {
-    { url } = this.props;
+  componentDidMount() {
+    const { url } = this.props;
+    this.fetchJson(url);
+  }
+
+  async fetchJson(url) {
     const file = await fetch(url);
     const json = await file.json();
     this.setState({
@@ -22,16 +28,24 @@ export default class OpenbadgeFromUrl {
 
   render() {
     const { url, json } = this.state;
+
     if (!json) {
       return(
-        <Typography>
-          Trying to load Openbadge from {url}
-        </Typography>
+        <Card>
+          <CardHeader
+            title="Loading..."
+            avatar={
+              <CircularProgress />
+            }>
+          </CardHeader>
+        </Card>
       );
     }
+
     return(
       <Openbadge
-        json={json} />
+        json={json}
+        {...this.props} />
     );
   }
 }

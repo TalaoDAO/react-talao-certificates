@@ -1,11 +1,11 @@
 import React, { Component, Fragment } from 'react';
 import ReactJson from 'react-json-view';
-import { Card, CardHeader, CardContent } from '@material-ui/core';
+import { Button, Card, CardHeader, CardContent, CardActions } from '@material-ui/core';
 
 export default class Openbadge extends Component {
 
   render() {
-    const { json } = this.props;
+    const { json, download } = this.props;
     return(
       <Card>
         <CardHeader
@@ -16,6 +16,16 @@ export default class Openbadge extends Component {
             src={json}
           />
         </CardContent>
+        <CardActions>
+          {
+            download &&
+              <Button
+                variant="raised"
+                color="primary">
+                Download
+              </Button>
+          }
+        </CardActions>
       </Card>
     );
   }
