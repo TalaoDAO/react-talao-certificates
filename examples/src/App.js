@@ -9,14 +9,14 @@ export default class App extends Component {
         <AppBar position="static">
           <Toolbar>
             <Button
-              href="https://github.com/guix77/react-openbadges"
+              href="https://https://github.com/TalaoDAO/react-talao-certificates"
               color="inherit">
-              React Openbadges
+              React Talao certificates
             </Button>
           </Toolbar>
         </AppBar>
         <OpenbadgeFromUrl
-          url="https://raw.githubusercontent.com/guix77/react-openbadges/master/examples/data/example.json"
+          url="https://raw.githubusercontent.com/TalaoDAO/react-talao-certificates/master/examples/data/example.json"
           download={true} />
       </Fragment>
     );

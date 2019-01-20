@@ -1,7 +1,7 @@
-import Openbadge from './Openbadge';
-import OpenbadgeFromUrl from './OpenbadgeFromUrl';
+import Talaocertificate from './Talaocertificate';
+import TalaocertificateFromUrl from './TalaocertificateFromUrl';
 
 module.exports = {
-  Openbadge,
-  OpenbadgeFromUrl
+  Talaocertificate,
+  TalaocertificateFromUrl
 }

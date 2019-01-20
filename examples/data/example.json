@@ -1,31 +1,82 @@
 {
-  "@context": "https://w3id.org/openbadges/v2",
-  "id": "https://example.org/assertions/123",
+  "@context": [
+    "https://w3id.org/openbadges/v2",
+    "doctype",
+    "version",
+    "start",
+    "end",
+    "duration",
+    "skills",
+    "ratings"
+  ],
+  "@id": "https://example.org/assertions/123",
   "type": "Assertion",
   "recipient": {
     "type": "email",
     "identity": "guillaume.duveau@gmail.com",
-    "name": "Guillaume Duveau"
+    "name": "Guillaume Duveau",
+    "ethereumAccount": "0xa447b114FA15698a8f564A80F2D63C199133618a",
+    "ethereumContract": "0x4b060E49D9E3b670674D93Cfe96e083309772ea6"
   },
-  "issuedOn": "2019-01-18T12:43:01.655Z",
+  "issuedOn": "2019-01-20T23:08:14.084Z",
   "verification": {
     "type": "hosted"
   },
   "badge": {
     "type": "BadgeClass",
     "id": "https://example.org/badges/5",
-    "name": "Badge title",
-    "description": "Badge description",
-    "image": "Badge image",
+    "name": "Hybrid suite",
+    "description": "Architecture, technical lead and co-development of a centralized and decentralized hybrid suite with: some Ethereum smart contracts, a backend in Node.js/MySQL and two interfaces in React",
+    "image": "data:image/png;base64,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",
     "issuer": {
       "id": "https://example.org/issuer",
       "type": "Profile",
-      "name": "Issuer name",
-      "url": "Issuer url",
-      "email": "Issuer email",
+      "name": "Talao",
+      "url": "https://talao.io",
+      "email": "certificates@talao.io",
       "verification": {
         "allowedOrigins": "example.org"
-      }
+      },
+      "ethereumAccount": "0x6d802227b50340f6b4AE29FC31d1444105D6bEfc",
+      "ethereumContract": "0xdde2551add83ca440000c0be0488ee05f28e4222"
     }
-  }
+  },
+  "doctype": 20000,
+  "version": 1,
+  "start": "2019-01-20T23:08:02.332Z",
+  "end": "2019-01-20T23:08:02.332Z",
+  "duration": "25",
+  "skills": [
+    "Solidity",
+    "Truffle",
+    "Web3",
+    "React",
+    "Material UI",
+    "Node",
+    "Ipfs",
+    "Technical architect",
+    "Technical lead"
+  ],
+  "ratings": [
+    {
+      "ratingValue": 5,
+      "name": "How likely are you to recommend this talent to others?"
+    },
+    {
+      "ratingValue": 5,
+      "name": "How would you rate his/her quality of skills?"
+    },
+    {
+      "ratingValue": 4,
+      "name": "How would you rate his/her ability to deliver to schedule?"
+    },
+    {
+      "ratingValue": 5,
+      "name": "How would you rate his/her ability to develop a creative solution to a problem?"
+    },
+    {
+      "ratingValue": 5,
+      "name": "How would you rate his/her overall communication skills?"
+    }
+  ]
 }

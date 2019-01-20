@@ -4,7 +4,7 @@ import { slugify } from 'transliteration';
 import { Button, Card, CardHeader, CardContent, CardActions } from '@material-ui/core';
 import ReactJson from 'react-json-view';
 
-export default class Openbadge extends Component {
+export default class Talaocertificate extends Component {
 
   constructor (props) {
     super (props);
@@ -13,9 +13,14 @@ export default class Openbadge extends Component {
 
   download() {
     const { json } = this.props;
-    const jsonStringified = JSON.stringify(json);
-    const fileName = slugify(json.recipient.name + '-' + json.badge.issuer.name + '-' + json.badge.name);
-    downloadjs(jsonStringified, fileName + '.json', 'text/plain');
+    const stringified = JSON.stringify(json);
+    const fileName = slugify(
+      'certificate-' +
+      json.recipient.name + '-' +
+      json.badge.issuer.name + '-' +
+      json.badge.name
+    );
+    downloadjs(stringified, fileName + '.json', 'text/plain');
   }
 
   render() {
@@ -23,7 +28,7 @@ export default class Openbadge extends Component {
     return(
       <Card>
         <CardHeader
-          title="Openbadge example">
+          title="Talaocertificate example">
         </CardHeader>
         <CardContent>
           <ReactJson

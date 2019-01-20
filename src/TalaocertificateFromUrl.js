@@ -1,9 +1,9 @@
 import React, { Component, } from 'react';
 import PropTypes from 'prop-types';
 import { Card, CardHeader, CircularProgress } from '@material-ui/core';
-import Openbadge from './Openbadge';
+import Talaocertificate from './Talaocertificate';
 
-export default class OpenbadgeFromUrl extends Component {
+export default class TalaocertificateFromUrl extends Component {
 
   constructor (props) {
     super (props);
@@ -42,7 +42,7 @@ export default class OpenbadgeFromUrl extends Component {
     }
 
     return(
-      <Openbadge
+      <Talaocertificate
         json={json}
         {...this.props} />
     );
