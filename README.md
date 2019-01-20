@@ -1,10 +1,10 @@
-# react-openbadges
+# react-talao-certificates
 
 **Not ready yet, do not download**
 
 ## Demo
 
-https://guix77.github.io/react-openbadges/
+https://TalaoDAO.github.io/react-talao-certificates
 
 ## Development
 
