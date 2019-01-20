@@ -1,5 +1,7 @@
-import Openbdages from './Openbadges';
+import Openbadge from './Openbadge';
+import OpenbadgeFromUrl from './OpenbadgeFromUrl';
 
 module.exports = {
-  Openbadges
+  Openbadge,
+  OpenbadgeFromUrl
 }

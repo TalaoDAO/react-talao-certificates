@@ -1,3 +1,3 @@
 # react-openbadges
 
-TODO
+**Not ready yet, do not download**
