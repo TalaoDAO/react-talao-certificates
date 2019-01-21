@@ -2,6 +2,7 @@
   "name": "react-talao-certificates",
   "version": "0.0.2",
   "description": "React component to display and verify Talao certificates",
+  "license": "MIT",
   "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -9,8 +10,9 @@
     "transpile": "babel src -d dist --copy-files",
     "prepublishOnly": "yarn run transpile",
     "build": "webpack --config=webpack.prod.js --mode production",
+    "buildDemo": "webpack --mode production",
     "deploy": "gh-pages -d examples/dist",
-    "publish-demo": "yarn run build && yarn run deploy"
+    "publish-demo": "yarn run buildDemo && yarn run deploy"
   },
   "repository": "https://github.com/TalaoDAO/react-talao-certificates.git",
   "author": "Guillaume Duveau <guillaume.duveau@gmail.com>",
