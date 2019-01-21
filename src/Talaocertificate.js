@@ -1,52 +1,80 @@
 import React, { Component, Fragment } from 'react';
 import downloadjs from 'downloadjs';
 import { slugify } from 'transliteration';
-import { Button, Card, CardHeader, CardContent, CardActions } from '@material-ui/core';
+import { Button, Card, CardHeader, CardContent, Tabs, Tab, withStyles } from '@material-ui/core';
 import ReactJson from 'react-json-view';
 
-export default class Talaocertificate extends Component {
+import Content from './components/Content';
+import certificateImage from './assets/images/certificate.js';
+
+const styles = theme => ({
+  cardRoot: {
+    border: 'none',
+    boxShadow: 'none',
+    borderRadius: 0
+  },
+  cardHeaderRoot: {
+    textAlign: 'center',
+    backgroundColor: '#edecec',
+    paddingBottom: 0
+  }
+});
+
+class Talaocertificate extends Component {
 
   constructor (props) {
     super (props);
-    this.download = this.download.bind(this);
+    this.state = {
+      tab: 0
+    };
+    this.changeTab = this.changeTab.bind(this);
   }
 
-  download() {
-    const { json } = this.props;
-    const stringified = JSON.stringify(json);
-    const fileName = slugify(
-      'certificate-' +
-      json.recipient.name + '-' +
-      json.badge.issuer.name + '-' +
-      json.badge.name
-    );
-    downloadjs(stringified, fileName + '.json', 'text/plain');
-  }
+  changeTab(event, value) {
+    this.setState({
+      tab: value
+    });
+  };
 
   render() {
-    const { json, download } = this.props;
+    const { classes, json } = this.props;
+    const { tab } = this.state;
     return(
-      <Card>
+      <Card classes={{root: classes.cardRoot}}>
         <CardHeader
-          title="Talaocertificate example">
+          title={
+            <img src={certificateImage} alt="Talao certificate" />
+          }
+          subheader={
+            <Tabs
+              value={tab}
+              onChange={this.changeTab}
+              textColor="primary"
+              indicatorColor="primary"
+              centered>
+              <Tab
+                label="View">
+              </Tab>
+              <Tab
+                label="Verify">
+              </Tab>
+            </Tabs>
+          }
+          classes={{
+            root: classes.cardHeaderRoot
+          }}>
         </CardHeader>
         <CardContent>
-          <ReactJson
-            src={json}
-          />
-        </CardContent>
-        <CardActions>
           {
-            download &&
-              <Button
-                onClick={() => this.download()}
-                variant="raised"
-                color="primary">
-                Download
-              </Button>
+            tab === 0 ?
+              <Content json={json} />
+            :
+              <ReactJson src={json} />
           }
-        </CardActions>
+        </CardContent>
       </Card>
     );
   }
 }
+
+export default withStyles(styles)(Talaocertificate);
