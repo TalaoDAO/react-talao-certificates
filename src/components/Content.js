@@ -29,7 +29,11 @@ const styles = theme => ({
     marginRight: theme.spacing.unit
   },
   logo: {
-    maxWidth: '100%'
+    maxWidth: '100%',
+    marginBottom: theme.spacing.unit
+  },
+  signature: {
+    maxWidth: '30%',
   },
   chipRoot: {
     margin: theme.spacing.unit
@@ -46,10 +50,7 @@ class Content extends Component {
         <Grid item xs={12} classes={{item: classes.gridItem}}>
         </Grid>
         <Grid item xs={12} lg={8} classes={{item: classes.gridItem}}>
-          <Typography color="primary" variant="display1">
-            {json.recipient.name}
-          </Typography>
-          <Typography color="primary" variant="headline">
+          <Typography color="primary" variant="display1" paragraph>
             {json.badge.name}
           </Typography>
           <Typography variant="subheading" paragraph>
@@ -91,13 +92,15 @@ class Content extends Component {
         </Grid>
         <Grid item xs={12} lg={4} classes={{item: classes.gridItem}}>
           <Card>
-            <CardHeader
-              title={'Issued by ' + json.badge.issuer.name}
-              subheader={
-                'On ' + format(json.issuedOn, 'D MMMM YYYY') + ' by ' + json.badge.issuer.contact.name + ', ' + json.badge.issuer.contact.jobTitle
-              }/>
+            <CardHeader title={'Issued to ' + json.recipient.name + ' by ' + json.badge.issuer.name} />
             <CardContent>
               <img src={json.badge.image} alt={json.badge.issuer.name} className={classes.logo} />
+              <Typography>
+                {
+                  'On ' + format(json.issuedOn, 'D MMMM YYYY') + ' by ' + json.badge.issuer.contact.name + ', ' + json.badge.issuer.contact.jobTitle
+                }
+              </Typography>
+              <img src={json.badge.issuer.contact.image} alt={json.badge.issuer.contact.name} className={classes.signature} />
             </CardContent>
             <CardActions>
               <Button
