@@ -44,7 +44,6 @@ class Content extends Component {
 
   render() {
     const { classes, json } = this.props;
-    console.log(json)
     return(
       <Grid container spacing={32} alignItems="center">
         <Grid item xs={12} classes={{item: classes.gridItem}}>

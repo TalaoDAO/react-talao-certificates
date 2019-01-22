@@ -1,8 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import downloadjs from 'downloadjs';
 import { slugify } from 'transliteration';
-import { Button, Card, CardHeader, CardContent, Tabs, Tab, withStyles } from '@material-ui/core';
-import ReactJson from 'react-json-view';
+import { Button, Card, CardHeader, CardContent, Tabs, Tab, Typography, withStyles } from '@material-ui/core';
 
 import Content from './components/Content';
 import certificateImage from './assets/images/certificate.js';
@@ -69,7 +68,7 @@ class Talaocertificate extends Component {
             tab === 0 ?
               <Content json={json} />
             :
-              <ReactJson src={json} />
+              <Typography>Verification is coming soon</Typography>
           }
         </CardContent>
       </Card>
