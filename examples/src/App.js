@@ -1,8 +1,8 @@
-import React, { Component, Fragment } from 'react';
-import { AppBar, Button, Card, CardHeader, CircularProgress, Grid, Toolbar, Typography } from '@material-ui/core';
-import Talaocertificate from '../../src/Talaocertificate';
+import React from 'react'
+import { AppBar, Button, Card, CardHeader, CircularProgress, Toolbar } from '@material-ui/core'
+import TalaoCertificate from '../../src/TalaoCertificate'
 
-export default class App extends Component {
+export default class App extends React.Component {
 
   constructor (props) {
     super (props);
@@ -12,22 +12,22 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    const url = 'https://raw.githubusercontent.com/TalaoDAO/react-talao-certificates/master/examples/data/example.json';
-    this.fetchJson(url);
+    const url = 'https://raw.githubusercontent.com/TalaoDAO/react-talao-certificates/master/examples/data/example.json'
+    this.fetchJson(url)
   }
 
   async fetchJson(url) {
-    const file = await fetch(url);
-    const json = await file.json();
+    const file = await fetch(url)
+    const json = await file.json()
     this.setState({
       json: json
-    });
+    })
   }
 
   render() {
-    const { json } = this.state;
+    const { json } = this.state
     return (
-      <Fragment>
+      <React.Fragment>
         <AppBar position="static">
           <Toolbar>
             <Button
@@ -39,7 +39,7 @@ export default class App extends Component {
         </AppBar>
         {
           json ?
-            <Talaocertificate json={json} />
+            <TalaoCertificate json={json} />
           :
             <Card>
               <CardHeader
@@ -50,7 +50,7 @@ export default class App extends Component {
               </CardHeader>
             </Card>
         }
-      </Fragment>
-    );
+      </React.Fragment>
+    )
   }
 }

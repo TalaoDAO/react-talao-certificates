@@ -1,4 +1,4 @@
-import Talaocertificate from './Talaocertificate';
+import Talaocertificate from './Talaocertificate'
 
 module.exports = {
   Talaocertificate

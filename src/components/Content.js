@@ -1,22 +1,16 @@
-import React, { Component, Fragment } from 'react';
+import React from 'react'
 import {
   Button,
-  Card,
-  CardHeader,
-  CardMedia,
-  CardContent,
-  CardActions,
+  Card, CardHeader, CardContent, CardActions,
   Chip,
   Grid,
-  List,
-  ListItem,
-  ListItemText,
+  List, ListItem, ListItemText,
   Typography,
   withStyles
-} from '@material-ui/core';
-import { Link } from '@material-ui/icons';
-import StarRatingComponent from 'react-star-rating-component';
-import format from 'date-fns/format';
+} from '@material-ui/core'
+import { Link } from '@material-ui/icons'
+import StarRatingComponent from 'react-star-rating-component'
+import format from 'date-fns/format'
 
 const styles = theme => ({
   gridItem: {
@@ -38,48 +32,53 @@ const styles = theme => ({
   chipRoot: {
     margin: theme.spacing.unit
   }
-});
+})
 
-class Content extends Component {
+class Content extends React.Component {
 
   render() {
-    const { classes, json } = this.props;
+    const { classes, json } = this.props
+    const { recipient, issuer, certificate } = json
+    const { organization, responsible } = issuer
     return(
       <Grid container spacing={32} alignItems="center">
         <Grid item xs={12} classes={{item: classes.gridItem}}>
         </Grid>
         <Grid item xs={12} lg={8} classes={{item: classes.gridItem}}>
           <Typography color="primary" variant="display1" paragraph>
-            {json.badge.name}
+            {certificate.title}
           </Typography>
           <Typography variant="subheading" paragraph>
             {
-              json.duration + ' days, from ' + format(json.start, 'D MMMM YYYY') + ' to ' + format(json.end, 'D MMMM YYYY')
+              certificate.duration + ' days, from ' + format(certificate.start, 'D MMMM YYYY') + ' to ' + format(certificate.end, 'D MMMM YYYY')
             }
           </Typography>
           <Typography paragraph>
-            {json.badge.description}
+            {certificate.description}
           </Typography>
           {
-            json.skills.map(
+            certificate.skills.map(
               (skill, index) => (
-                <Chip key={index} label="Basic Chip" classes={{root: classes.chipRoot}} />
+                <Chip
+                  key={index}
+                  label={skill.name}
+                  classes={{root: classes.chipRoot}} />
               )
             )
           }
           <List>
             {
-              json.ratings.map(
+              certificate.ratings.map(
                 (rating, index) => (
                   <ListItem key={index}>
                     <ListItemText>
                       <Typography>
-                        {rating.name}
+                        {rating.title}
                       </Typography>
                     </ListItemText>
                     <StarRatingComponent
-                      name={rating.name}
-                      value={rating.ratingValue}
+                      name={rating.title}
+                      value={rating.score}
                       editing={false}
                       starCount={5}
                     />
@@ -91,21 +90,22 @@ class Content extends Component {
         </Grid>
         <Grid item xs={12} lg={4} classes={{item: classes.gridItem}}>
           <Card>
-            <CardHeader title={'Issued to ' + json.recipient.name + ' by ' + json.badge.issuer.name} />
+            <CardHeader title={'Issued to ' + recipient.name + ' by ' + organization.name} />
             <CardContent>
-              <img src={json.badge.image} alt={json.badge.issuer.name} className={classes.logo} />
+              <img src={organization.image} alt={organization.name} className={classes.logo} />
               <Typography>
                 {
-                  'On ' + format(json.issuedOn, 'D MMMM YYYY') + ' by ' + json.badge.issuer.contact.name + ', ' + json.badge.issuer.contact.jobTitle
+                  'On ' + format(certificate.issuedOn, 'D MMMM YYYY') + ' by ' + responsible.name + ', ' + responsible.title
                 }
               </Typography>
-              <img src={json.badge.issuer.contact.image} alt={json.badge.issuer.contact.name} className={classes.signature} />
+              <img src={responsible.image} alt={responsible.name} className={classes.signature} />
             </CardContent>
             <CardActions>
               <Button
-                href={json.badge.issuer.url}
+                href={organization.url}
                 target="_blank"
                 rel="noopener noreferrer"
+                variant="contained"
                 color="primary"
                 className={classes.button}>
                 <Link className={classes.buttonIcon} />Website
@@ -114,8 +114,8 @@ class Content extends Component {
           </Card>
         </Grid>
       </Grid>
-    );
+    )
   }
 }
 
-export default withStyles(styles)(Content);
+export default withStyles(styles)(Content)

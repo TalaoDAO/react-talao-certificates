@@ -1,10 +1,13 @@
-import React, { Component, Fragment } from 'react';
-import downloadjs from 'downloadjs';
-import { slugify } from 'transliteration';
-import { Button, Card, CardHeader, CardContent, Tabs, Tab, Typography, withStyles } from '@material-ui/core';
+import React from 'react'
+import {
+  Card, CardHeader, CardContent,
+  Tabs, Tab,
+  Typography,
+  withStyles
+} from '@material-ui/core'
 
-import Content from './components/Content';
-import certificateImage from './assets/images/certificate.js';
+import Content from './components/Content'
+import certificateImage from './assets/images/certificate.js'
 
 const styles = theme => ({
   cardRoot: {
@@ -17,27 +20,27 @@ const styles = theme => ({
     backgroundColor: '#edecec',
     paddingBottom: 0
   }
-});
+})
 
-class Talaocertificate extends Component {
+class TalaoCertificate extends React.Component {
 
   constructor (props) {
-    super (props);
+    super (props)
     this.state = {
       tab: 0
-    };
-    this.changeTab = this.changeTab.bind(this);
+    }
+    this.changeTab = this.changeTab.bind(this)
   }
 
-  changeTab(event, value) {
+  changeTab(value) {
     this.setState({
       tab: value
-    });
-  };
+    })
+  }
 
   render() {
-    const { classes, json } = this.props;
-    const { tab } = this.state;
+    const { classes, json } = this.props
+    const { tab } = this.state
     return(
       <Card classes={{root: classes.cardRoot}}>
         <CardHeader
@@ -72,8 +75,8 @@ class Talaocertificate extends Component {
           }
         </CardContent>
       </Card>
-    );
+    )
   }
 }
 
-export default withStyles(styles)(Talaocertificate);
+export default withStyles(styles)(TalaoCertificate)
