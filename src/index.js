@@ -1,5 +1,5 @@
-import Talaocertificate from './Talaocertificate'
+import TalaoCertificate from './TalaoCertificate'
 
 module.exports = {
-  Talaocertificate
+  TalaoCertificate
 }
