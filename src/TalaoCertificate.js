@@ -57,9 +57,9 @@ class TalaoCertificate extends React.Component {
               <Tab
                 label="View">
               </Tab>
-              <Tab
+              {/* <Tab
                 label="Verify">
-              </Tab>
+              </Tab> */}
             </Tabs>
           }
           classes={{

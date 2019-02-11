@@ -45,10 +45,10 @@ class Content extends React.Component {
         <Grid item xs={12} classes={{item: classes.gridItem}}>
         </Grid>
         <Grid item xs={12} lg={8} classes={{item: classes.gridItem}}>
-          <Typography color="primary" variant="display1" paragraph>
+          <Typography color="primary" variant="h4" paragraph>
             {certificate.title}
           </Typography>
-          <Typography variant="subheading" paragraph>
+          <Typography variant="subtitle1" paragraph>
             {
               certificate.duration + ' days, from ' + format(certificate.from, 'D MMMM YYYY') + ' to ' + format(certificate.to, 'D MMMM YYYY')
             }
