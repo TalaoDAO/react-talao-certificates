@@ -32,7 +32,7 @@ class TalaoCertificate extends React.Component {
     this.changeTab = this.changeTab.bind(this)
   }
 
-  changeTab(value) {
+  changeTab(event, value) {
     this.setState({
       tab: value
     })
