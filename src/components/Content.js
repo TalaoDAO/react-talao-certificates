@@ -50,7 +50,7 @@ class Content extends React.Component {
           </Typography>
           <Typography variant="subheading" paragraph>
             {
-              certificate.duration + ' days, from ' + format(certificate.start, 'D MMMM YYYY') + ' to ' + format(certificate.end, 'D MMMM YYYY')
+              certificate.duration + ' days, from ' + format(certificate.from, 'D MMMM YYYY') + ' to ' + format(certificate.to, 'D MMMM YYYY')
             }
           </Typography>
           <Typography paragraph>
