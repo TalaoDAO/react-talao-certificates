@@ -1,6 +1,6 @@
 {
   "name": "react-talao-certificates",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "React component to display and verify Talao certificates",
   "license": "MIT",
   "main": "dist/index.js",
@@ -17,12 +17,10 @@
   "repository": "https://github.com/TalaoDAO/react-talao-certificates.git",
   "author": "Guillaume Duveau <guillaume.duveau@gmail.com>",
   "dependencies": {
-    "@material-ui/core": "^1.3.1",
-    "@material-ui/icons": "^1.1.0",
-    "date-fns": "^1.30.1",
-    "downloadjs": "^1.4.7",
-    "react-star-rating-component": "^1.4.1",
-    "transliteration": "^2.1.1"
+    "@material-ui/core": "^3.9.1",
+    "@material-ui/icons": "^3.0.2",
+    "date-fns": "^1.29.0",
+    "react-star-rating-component": "^1.4.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
@@ -35,15 +33,14 @@
     "css-loader": "^0.28.11",
     "gh-pages": "^1.2.0",
     "html-webpack-plugin": "^3.2.0",
-    "react": "^16.4.1",
-    "react-dom": "^16.4.1",
-    "style-loader": "^0.21.0",
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2",
     "webpack": "^4.12.0",
     "webpack-cli": "^3.0.6",
     "webpack-dev-server": "^3.1.4"
   },
   "peerDependencies": {
-    "react": "^16.4.1",
-    "react-dom": "^16.4.1"
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2"
   }
 }
