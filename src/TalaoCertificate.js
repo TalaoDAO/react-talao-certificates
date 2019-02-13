@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import {
   Card, CardHeader, CardContent,
   Tabs, Tab,
@@ -7,6 +8,7 @@ import {
 } from '@material-ui/core'
 
 import Content from './components/Content'
+import Verify from './components/Verify'
 import certificateImage from './assets/images/certificate.js'
 
 const styles = theme => ({
@@ -24,25 +26,23 @@ const styles = theme => ({
 
 class TalaoCertificate extends React.Component {
 
-  constructor (props) {
-    super (props)
-    this.state = {
-      tab: 0
-    }
-    this.changeTab = this.changeTab.bind(this)
+  state = {
+    tab: 1
   }
 
-  changeTab(event, value) {
+  changeTab = (event, value) => {
     this.setState({
       tab: value
     })
   }
 
   render() {
-    const { classes, json } = this.props
+
+    const { classes, json, network } = this.props
     const { tab } = this.state
-    return(
-      <Card classes={{root: classes.cardRoot}}>
+
+    return (
+      <Card classes={{ root: classes.cardRoot }}>
         <CardHeader
           title={
             <img src={certificateImage} alt="Talao certificate" />
@@ -50,16 +50,16 @@ class TalaoCertificate extends React.Component {
           subheader={
             <Tabs
               value={tab}
-              onChange={this.changeTab}
+              onChange={(event, value) => this.changeTab(event, value)}
               textColor="primary"
               indicatorColor="primary"
               centered>
               <Tab
                 label="View">
               </Tab>
-              {/* <Tab
+              <Tab
                 label="Verify">
-              </Tab> */}
+              </Tab>
             </Tabs>
           }
           classes={{
@@ -70,13 +70,21 @@ class TalaoCertificate extends React.Component {
           {
             tab === 0 ?
               <Content json={json} />
-            :
-              <Typography>Verification is coming soon</Typography>
+              :
+              <Verify json={json} network={network} />
           }
         </CardContent>
       </Card>
     )
   }
+}
+
+TalaoCertificate.propTypes = {
+  network: PropTypes.string
+}
+
+TalaoCertificate.defaultProps = {
+  network: 'mainnet'
 }
 
 export default withStyles(styles)(TalaoCertificate)

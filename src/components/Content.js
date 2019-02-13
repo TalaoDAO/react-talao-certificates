@@ -42,8 +42,6 @@ class Content extends React.Component {
     const { organization, responsible } = issuer
     return(
       <Grid container spacing={32} alignItems="center">
-        <Grid item xs={12} classes={{item: classes.gridItem}}>
-        </Grid>
         <Grid item xs={12} lg={8} classes={{item: classes.gridItem}}>
           <Typography color="primary" variant="h4" paragraph>
             {certificate.title}

@@ -39,7 +39,7 @@ export default class App extends React.Component {
         </AppBar>
         {
           json ?
-            <TalaoCertificate json={json} />
+            <TalaoCertificate json={json} network='rinkeby' />
           :
             <Card>
               <CardHeader
