@@ -27,7 +27,7 @@ const styles = theme => ({
 class TalaoCertificate extends React.Component {
 
   state = {
-    tab: 1
+    tab: 0
   }
 
   changeTab = (event, value) => {
@@ -38,7 +38,7 @@ class TalaoCertificate extends React.Component {
 
   render() {
 
-    const { classes, json, network } = this.props
+    const { classes, json, network, preview } = this.props
     const { tab } = this.state
 
     return (
@@ -55,11 +55,15 @@ class TalaoCertificate extends React.Component {
               indicatorColor="primary"
               centered>
               <Tab
-                label="View">
+                label={preview ? 'Preview' : 'View'}>
               </Tab>
-              <Tab
-                label="Verify">
-              </Tab>
+              {
+                !preview && (
+                  <Tab
+                    label="Verify">
+                  </Tab>
+                )
+              }
             </Tabs>
           }
           classes={{
@@ -68,10 +72,15 @@ class TalaoCertificate extends React.Component {
         </CardHeader>
         <CardContent>
           {
-            tab === 0 ?
+            preview ? (
               <Content json={json} />
-              :
-              <Verify json={json} network={network} />
+            ) :
+              tab === 0 ? (
+                <Content json={json} />
+              )
+              : (
+                <Verify json={json} network={network} />
+              )
           }
         </CardContent>
       </Card>
@@ -80,7 +89,8 @@ class TalaoCertificate extends React.Component {
 }
 
 TalaoCertificate.propTypes = {
-  network: PropTypes.string
+  network: PropTypes.string,
+  preview: PropTypes.bool
 }
 
 TalaoCertificate.defaultProps = {

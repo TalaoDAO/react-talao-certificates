@@ -1,10 +1,15 @@
 # react-talao-certificates
 
-**Not ready yet, do not download**
-
 ## Demo
 
 https://TalaoDAO.github.io/react-talao-certificates
+
+## Usage
+
+    <TalaoCertificate json={json} network='rinkeby' preview={true} />
+
++ network is optional, defaults to 'mainnet'
++ preview is optional, defaults to false
 
 ## Development
 

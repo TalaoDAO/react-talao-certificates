@@ -31,7 +31,7 @@ export default class App extends React.Component {
         <AppBar position="static">
           <Toolbar>
             <Button
-              href="https://https://github.com/TalaoDAO/react-talao-certificates"
+              href="https://github.com/TalaoDAO/react-talao-certificates"
               color="inherit">
               React Talao certificates
             </Button>
