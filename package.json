@@ -1,6 +1,6 @@
 {
   "name": "react-talao-certificates",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "React component to display and verify Talao certificates",
   "license": "MIT",
   "main": "dist/index.js",
@@ -21,8 +21,9 @@
     "@material-ui/icons": "^3.0.2",
     "date-fns": "^1.29.0",
     "js-sha256": "^0.9.0",
+    "react-json-view": "^1.19.1",
     "react-star-rating-component": "^1.4.1",
-    "web3": "1.0.0-beta.35"
+    "web3": "1.0.0-beta.46"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
