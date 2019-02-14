@@ -6,6 +6,8 @@ https://TalaoDAO.github.io/react-talao-certificates
 
 ## Usage
 
+    import { TalaoCertificate } from 'react-talao-certificates'
+    ...
     <TalaoCertificate json={json} network='rinkeby' preview={true} />
 
 + network is optional, defaults to 'mainnet'
