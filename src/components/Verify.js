@@ -1,14 +1,16 @@
 import React from 'react'
 import Web3 from 'web3'
-// import ReactJson from 'react-json-view'
+import ReactJson from 'react-json-view'
 import {
   Avatar,
+  Button,
   Card, CardHeader, CardContent,
   CircularProgress,
   Grid,
   Typography,
   withStyles
 } from '@material-ui/core'
+import { Link } from '@material-ui/icons'
 
 import checksumHelper from '../helpers/checksumHelper'
 import ethereumHelper from '../helpers/ethereumHelper'
@@ -16,33 +18,24 @@ import foundationJson from '../contracts/Foundation.json'
 import workspaceJson from '../contracts/Workspace.json'
 
 const styles = theme => ({
-  loaderContainer: {
-    textAlign: 'center'
-  },
   gridContainer: {
     marginTop: theme.spacing.unit * 4,
     textAlign: 'left'
   },
   cardRoot: {
-    width: '75%',
     marginLeft: 'auto',
     marginRight: 'auto'
   },
-  link: {
-    color: theme.palette.primary.main,
-    fontWeight: 'bold',
-    textDecoration: 'none',
-    '&:hover': {
-      textDecoration: 'underline'
-    }
+  loaderContainer: {
+    textAlign: 'center'
   },
   itemGridResult: {
     textAlign: 'center'
   },
-  resultSuccess: {
+  titleSuccess: {
     color: '#008000'
   },
-  resultError: {
+  titleError: {
     color: '#ff0000'
   },
   avatarSuccess: {
@@ -50,17 +43,20 @@ const styles = theme => ({
   },
   avatarError: {
     backgroundColor: '#ff0000'
+  },
+  buttonIcon: {
+    marginRight: theme.spacing.unit
   }
 })
 
 class Verify extends React.Component {
 
   state = {
-    checksum: null,
+    completedSteps: 0,
     checkedRecipientEthereumContract: null,
     checkedOrganizationEthereumContract: null,
-    transaction: null,
-    finished: null
+    checksum: null,
+    event: null
   }
 
   async componentDidMount() {
@@ -68,14 +64,22 @@ class Verify extends React.Component {
     const { recipient, issuer } = json
     const { ethereum_account, ethereum_contract } = recipient
     const { organization } = issuer
-    const checksum = checksumHelper.get(json)
     const web3 = new Web3('wss://' + network + '.infura.io/ws')
     const foundationContract = new web3.eth.Contract(
       foundationJson.abi,
       foundationJson.networks[ethereumHelper.getNetworkId(network)].address
     )
     const checkedRecipientEthereumContract = await foundationContract.methods.ownersToContracts(ethereum_account).call()
+    this.setState({
+      completedSteps: 1,
+      checkedRecipientEthereumContract
+    })
     const checkedOrganizationEthereumContract = await foundationContract.methods.ownersToContracts(organization.ethereum_account).call()
+    this.setState({
+      completedSteps: 2,
+      checkedOrganizationEthereumContract
+    })
+    const checksum = checksumHelper.get(json)
     const recipientContract = new web3.eth.Contract(workspaceJson.abi, ethereum_contract)
     const certificateIssuedEvents = await recipientContract.getPastEvents(
       'CertificateIssued', {
@@ -88,64 +92,46 @@ class Verify extends React.Component {
     if (certificateIssuedEvents && certificateIssuedEvents.length === 1) {
       event = certificateIssuedEvents[0]
     }
-    let transaction
-    if (event) {
-      transaction = await web3.eth.getTransactionReceipt(event.transactionHash)
-    }
     this.setState({
+      completedSteps: 3,
       checksum,
-      checkedRecipientEthereumContract,
-      checkedOrganizationEthereumContract,
-      event,
-      transaction,
-      finished: true
+      event
     })
   }
 
-  renderEtherscan = (_address, type = 'address') => {
-    const { classes, network } = this.props
-    return (
-      <a
-        href={'https://' + network + '.etherscan.io/' + type + '/' + _address}
-        target='etherscan'
-        rel="noopener noreferrer"
-        className={classes.link}>
-        {_address}
-      </a>
-    )
+  getEtherscanAddress = (_address, _type = 'address') => {
+    const { network } = this.props
+    return 'https://' + network + '.etherscan.io/' + _type + '/' + _address
   }
 
   getAvatarClass = _step => {
     const { classes } = this.props
+    const { completedSteps } = this.state
     switch (_step) {
 
       case 1:
-        return this.recipientHasCorrectContract() ? classes.avatarSuccess : classes.avatarError
+        return completedSteps >= _step ? this.recipientHasCorrectContract() ? classes.avatarSuccess : classes.avatarError : ''
 
       case 2:
-        return this.issuerHasCorrectContract() ? classes.avatarSuccess : classes.avatarError
+        return completedSteps >= _step ? this.issuerHasCorrectContract() ? classes.avatarSuccess : classes.avatarError : ''
 
       case 3:
-        return this.eventHasCorrectChecksum() ? classes.avatarSuccess : classes.avatarError
-
-      case 4:
-        return this.eventHasCorrectIssuer() ? classes.avatarSuccess : classes.avatarError
-
-      case 5:
-        return this.transactionHasCorrectAccount() ? classes.avatarSuccess : classes.avatarError
+        return completedSteps >= _step ? this.hasEvent() ? classes.avatarSuccess : classes.avatarError : ''
 
       default:
         return ''
     }
   }
 
-  getResultClass = () => {
+  getTitleClass = () => {
     const { classes } = this.props
-    return this.isVerified() ? classes.resultSuccess : classes.resultError
+    const { completedSteps } = this.state
+    return completedSteps === 3 ? this.isVerified() ? classes.titleSuccess : classes.titleError : ''
   }
 
-  getResultText = () => {
-    return this.isVerified() ? 'Valid certificate!' : 'Incorrect certificate!'
+  getTitleText = () => {
+    const { completedSteps } = this.state
+    return completedSteps === 3 ? this.isVerified() ? 'Valid certificate!' : 'Incorrect certificate!' : 'Verifying certificate...'
   }
 
   recipientHasCorrectContract = () => {
@@ -166,191 +152,148 @@ class Verify extends React.Component {
     return false
   }
 
-  eventHasCorrectChecksum = () => {
-    // TODO: strange things with Web3:
-    // 1) we filter by checksum and DO FIND the event
-    // 2) the event returnValues are wrong both for CHECKSUM which we just filtered on, and issuer
-    // 3) in Etherscan, checksum and issuer are correctly read and correspond.
-    // 4) So marking this as yet another Web3 issue, for now.
-    return true
-    // const { checksum, event } = this.state
-    // if (checksum && event) {
-    //   return '0x' + checksum === event.returnValues.checksum
-    // }
-    // return false
-  }
-
-  eventHasCorrectIssuer = () => {
-    // TODO: same as above.
-    return true
-    // const issuer = this.props.json.issuer.organization.ethereum_contract
-    // const { event } = this.state
-    // if (event) {
-    //   return event.returnValues.issuer === issuer
-    // }
-    // return false
-  }
-
-  transactionHasCorrectAccount = () => {
-    const account = this.props.json.issuer.organization.ethereum_account
-    const { transaction } = this.state
-    if (transaction) {
-      return transaction.from.toLowerCase() === account.toLowerCase()
-    }
+  hasEvent = () => {
+    const { event } = this.state
+    return event ? true : false
   }
 
   isVerified = () => {
     return (
       this.recipientHasCorrectContract() &&
       this.issuerHasCorrectContract() &&
-      this.eventHasCorrectChecksum() &&
-      this.eventHasCorrectIssuer() &&
-      this.transactionHasCorrectAccount()
+      this.hasEvent()
     )
   }
 
   render() {
     const {
-      checksum,
+      completedSteps,
       checkedRecipientEthereumContract,
-      checkedOrganizationEthereumContract,
-      event,
-      finished
+      checkedOrganizationEthereumContract
     } = this.state
-    const { classes, json } = this.props
-    const { recipient, issuer } = json
-    const { ethereum_account, ethereum_contract } = recipient
-    const { organization } = issuer
-
-    // if (!finished) {
-    //   return (
-    //     <div className={classes.loaderContainer}>
-    //       <CircularProgress />
-    //     </div>
-    //   )
-    // }
+    const { classes, json, network } = this.props
 
     return (
-      <Grid container spacing={32} classes={{container: classes.gridContainer}}>
-        <Grid item xs={12} classes={{item: classes.itemGridResult}}>
-          <Typography variant="h2" className={this.getResultClass()}>
-            {this.getResultText()}
+      <Grid container spacing={32} classes={{ container: classes.gridContainer }}>
+        <Grid item xs={12} classes={{ item: classes.itemGridResult }}>
+          <Typography variant="h2" className={this.getTitleClass()}>
+            {this.getTitleText()}
           </Typography>
         </Grid>
-        <Grid item xs={12}>
-          <Card classes={{root: classes.cardRoot}}>
-            <CardHeader
-              title="Recipient Ethereum account and contract"
-              subheader="We take the recipient Ethereum account address in the certificate, and compare the address of the smart contract in the certificate and in Talao Foundation."
-              avatar={<Avatar className={this.getAvatarClass(1)}>1</Avatar>} />
-            <CardContent>
-              <Typography paragraph>
-                Ethereum account according to JSON: {this.renderEtherscan(ethereum_account)}
-              </Typography>
-              <Typography paragraph>
-                Ethereum contract according to JSON: {this.renderEtherscan(ethereum_contract)}
-              </Typography>
-              <Typography paragraph>
-                Ethereum contract according to Talao Foundation smart contract: {this.renderEtherscan(checkedRecipientEthereumContract)}
-              </Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-        <Grid item xs={12}>
-          <Card classes={{root: classes.cardRoot}}>
-            <CardHeader
-              title="Issuer Ethereum account and contract"
-              subheader="We take the issuer Ethereum account address in the certificate, and compare the address of the smart contract in the certificate and in Talao Foundation."
-              avatar={<Avatar className={this.getAvatarClass(2)}>2</Avatar>} />
-            <CardContent>
-              <Typography paragraph>
-                Ethereum account according to JSON: {this.renderEtherscan(organization.ethereum_account)}
-              </Typography>
-              <Typography paragraph>
-                Ethereum contract according to JSON: {this.renderEtherscan(organization.ethereum_contract)}
-              </Typography>
-              <Typography paragraph>
-                Ethereum contract according to Talao Foundation smart contract: {this.renderEtherscan(checkedOrganizationEthereumContract)}
-              </Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-        <Grid item xs={12}>
-          <Card classes={{root: classes.cardRoot}}>
-            <CardHeader
-              title="Existence of CertificateIssued event"
-              subheader="We compute the SHA 256 checksum of the certificate and we look in the smart contract for a DocumentIssued event emitted with this checksum and the issuer Ethereum smart contract address."
-              avatar={<Avatar className={this.getAvatarClass(3)}>3</Avatar>} />
-            <CardContent>
-              {
-                event ? (
-                  <React.Fragment>
-                    <Typography paragraph>
-                      Found corresponding CertificateIssued event found in smart contract, with the correct checksum: {checksum}
-                    </Typography>
-                    {/* <ReactJson src={event} collapsed={true} /> */}
-                  </React.Fragment>
-                )
-                  : (
-                    <Typography paragraph color="error">
-                      Not found corresponding CertificateIssued event found in smart contract, with this checksum
-                  </Typography>
-                  )
-              }
-            </CardContent>
-          </Card>
-        </Grid>
-        <Grid item xs={12}>
-          <Card classes={{root: classes.cardRoot}}>
-            <CardHeader
-              title="Issuer in CertificateIssued event"
-              subheader="We check that this event was "
-              avatar={<Avatar className={this.getAvatarClass(4)}>4</Avatar>} />
-            <CardContent>
-              {
-                this.eventHasCorrectIssuer() ? (
-                  <React.Fragment>
-                    <Typography paragraph>
-                      Issuer is the same in event than in JSON
-                    </Typography>
-                    {/* <ReactJson src={json} collapsed={true} /> */}
-                  </React.Fragment>
-                )
-                  : (
-                    <Typography paragraph color="error">
-                      Issuer is not the same in event than in JSON
-                  </Typography>
-                  )
-              }
-            </CardContent>
-          </Card>
-        </Grid>
-        {
-          event && (
+        <Grid item xs={12} lg={9}>
+          <Grid container spacing={32}>
             <Grid item xs={12}>
-              <Card classes={{root: classes.cardRoot}}>
-                <CardHeader title="Checking transaction" avatar={<Avatar className={this.getAvatarClass(5)}>5</Avatar>} />
+              <Card classes={{ root: classes.cardRoot }}>
+                <CardHeader
+                  title="Recipient Ethereum account and contract"
+                  avatar={<Avatar className={this.getAvatarClass(1)}>1</Avatar>} />
                 <CardContent>
-                  <Typography paragraph>
-                    Transaction: {this.renderEtherscan(event.transactionHash, 'tx')}
-                  </Typography>
                   {
-                    this.transactionHasCorrectAccount() ? (
-                      <Typography>
-                        Transaction was indeed signed by the organization Ethereum account.
-                      </Typography>
+                    completedSteps <= 0 ? (
+                      <div className={classes.loaderContainer}>
+                        <CircularProgress />
+                      </div>
+                    )
+                      : (
+                        <Typography>
+                          We take the recipient Ethereum account address in the certificate, and compare the address of the smart contract in the certificate and in Talao Foundation.
+                        </Typography>
+                      )
+                  }
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid item xs={12}>
+              <Card classes={{ root: classes.cardRoot }}>
+                <CardHeader
+                  title="Issuer Ethereum account and contract"
+                  avatar={<Avatar className={this.getAvatarClass(2)}>2</Avatar>} />
+                <CardContent>
+                  {
+                    completedSteps <= 1 ? (
+                      <div className={classes.loaderContainer}>
+                        <CircularProgress />
+                      </div>
+                    )
+                      : (
+                        <Typography>
+                          We take the issuer Ethereum account address in the certificate, and compare the address of the smart contract in the certificate and in Talao Foundation.
+                        </Typography>
+                      )
+                  }
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid item xs={12}>
+              <Card classes={{ root: classes.cardRoot }}>
+                <CardHeader
+                  title="Existence of CertificateIssued event"
+                  avatar={<Avatar className={this.getAvatarClass(3)}>3</Avatar>} />
+                <CardContent>
+                  {
+                    completedSteps <= 2 ? (
+                      <div className={classes.loaderContainer}>
+                        <CircularProgress />
+                      </div>
                     )
                     : (
-                      <Typography color="error">
-                        Transaction was not signed by the organization Ethereum account.
+                      <Typography>
+                        We compute the SHA 256 checksum of the certificate and we look in the smart contract for a DocumentIssued event with this checksum and the issuer smart contract.
                       </Typography>
                     )
                   }
                 </CardContent>
               </Card>
             </Grid>
-          )
-        }
+          </Grid>
+        </Grid>
+        <Grid item xs={12} lg={3}>
+          <Grid container spacing={32}>
+            <Grid item xs={12}>
+              <Typography variant="h6">Verify by yourself</Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography paragraph>Explore the certificate JSON:</Typography>
+              <ReactJson src={json} collapsed={true} />
+            </Grid>
+            <Grid item xs={12}>
+              <Button
+                href={this.getEtherscanAddress(checkedRecipientEthereumContract)}
+                target="etherscan"
+                color="primary"
+                variant="outlined">
+                <Link className={classes.buttonIcon} />Freelance on Etherscan
+              </Button>
+            </Grid>
+            <Grid item xs={12}>
+            <Button
+                href={this.getEtherscanAddress(checkedOrganizationEthereumContract)}
+                target="etherscan"
+                color="primary"
+                variant="outlined">
+                <Link className={classes.buttonIcon} />Organization on Etherscan
+              </Button>
+            </Grid>
+            <Grid item xs={12}>
+            <Button
+                href={this.getEtherscanAddress(foundationJson.networks[ethereumHelper.getNetworkId(network)].address)}
+                target="etherscan"
+                color="primary"
+                variant="outlined">
+                <Link className={classes.buttonIcon} />Foundation on Etherscan
+              </Button>
+            </Grid>
+            <Grid item xs={12}>
+            <Button
+                href="https://github.com/TalaoDAO/talao-contracts"
+                target="github"
+                color="primary"
+                variant="outlined">
+                <Link className={classes.buttonIcon} />Github
+              </Button>
+            </Grid>
+          </Grid>
+        </Grid>
       </Grid>
     )
   }
