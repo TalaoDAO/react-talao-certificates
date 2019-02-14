@@ -236,11 +236,11 @@ class Verify extends React.Component {
                         <CircularProgress />
                       </div>
                     )
-                    : (
-                      <Typography>
-                        We compute the SHA 256 checksum of the certificate and we look in the smart contract for a DocumentIssued event with this checksum and the issuer smart contract.
+                      : (
+                        <Typography>
+                          We compute the SHA 256 checksum of the certificate and we look in the smart contract for a DocumentIssued event with this checksum and the issuer smart contract.
                       </Typography>
-                    )
+                      )
                   }
                 </CardContent>
               </Card>
@@ -257,41 +257,54 @@ class Verify extends React.Component {
               <ReactJson src={json} collapsed={true} />
             </Grid>
             <Grid item xs={12}>
+              <Typography>Etherscan links:</Typography>
+            </Grid>
+            <Grid item xs={12}>
               <Button
                 href={this.getEtherscanAddress(checkedRecipientEthereumContract)}
                 target="etherscan"
                 color="primary"
                 variant="outlined">
-                <Link className={classes.buttonIcon} />Freelance on Etherscan
+                <Link className={classes.buttonIcon} />Freelance
               </Button>
             </Grid>
             <Grid item xs={12}>
-            <Button
+              <Button
                 href={this.getEtherscanAddress(checkedOrganizationEthereumContract)}
                 target="etherscan"
                 color="primary"
                 variant="outlined">
-                <Link className={classes.buttonIcon} />Organization on Etherscan
+                <Link className={classes.buttonIcon} />Organization
               </Button>
             </Grid>
             <Grid item xs={12}>
-            <Button
+              <Button
                 href={this.getEtherscanAddress(foundationJson.networks[ethereumHelper.getNetworkId(network)].address)}
                 target="etherscan"
                 color="primary"
                 variant="outlined">
-                <Link className={classes.buttonIcon} />Foundation on Etherscan
+                <Link className={classes.buttonIcon} />Foundation
               </Button>
             </Grid>
             <Grid item xs={12}>
-            <Button
+              <Typography>Source code:</Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Button
                 href="https://github.com/TalaoDAO/talao-contracts"
                 target="github"
                 color="primary"
                 variant="outlined">
-                <Link className={classes.buttonIcon} />Github
+                <Link className={classes.buttonIcon} />Smart contracts
               </Button>
             </Grid>
+            <Button
+              href="https://github.com/TalaoDAO/react-talao-certificates"
+              target="github"
+              color="primary"
+              variant="outlined">
+              <Link className={classes.buttonIcon} />React component
+              </Button>
           </Grid>
         </Grid>
       </Grid>
