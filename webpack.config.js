@@ -23,7 +23,10 @@ module.exports = {
     ]
   },
   plugins: [
-    new HtmlWebpackPlugin({template: './examples/public/index.html'})
+    new HtmlWebpackPlugin({
+      template: path.join(__dirname, "examples/public/index.html"),
+      filename: "./index.html"
+    })
   ],
   resolve: {
     extensions: ['.js', '.jsx']
