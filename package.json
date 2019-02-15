@@ -23,7 +23,7 @@
     "js-sha256": "^0.9.0",
     "react-json-view": "^1.19.1",
     "react-star-rating-component": "^1.4.1",
-    "web3": "1.0.0-beta.37"
+    "web3": "1.0.0-beta.33"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
