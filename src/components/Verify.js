@@ -298,13 +298,15 @@ class Verify extends React.Component {
                 <Link className={classes.buttonIcon} />Smart contracts
               </Button>
             </Grid>
-            <Button
-              href="https://github.com/TalaoDAO/react-talao-certificates"
-              target="github"
-              color="primary"
-              variant="outlined">
-              <Link className={classes.buttonIcon} />React component
+            <Grid item xs={12}>
+              <Button
+                href="https://github.com/TalaoDAO/react-talao-certificates"
+                target="github"
+                color="primary"
+                variant="outlined">
+                <Link className={classes.buttonIcon} />React component
               </Button>
+            </Grid>
           </Grid>
         </Grid>
       </Grid>
