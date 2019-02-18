@@ -1,6 +1,6 @@
 {
   "name": "react-talao-certificates",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "React component to display and verify Talao certificates",
   "license": "MIT",
   "main": "dist/index.js",
@@ -20,8 +20,8 @@
     "@material-ui/core": "^3.9.1",
     "@material-ui/icons": "^3.0.2",
     "date-fns": "^1.29.0",
+    "downloadjs": "^1.4.7",
     "js-sha256": "^0.9.0",
-    "react-json-view": "^1.19.1",
     "react-star-rating-component": "^1.4.1",
     "web3": "1.0.0-beta.33"
   },

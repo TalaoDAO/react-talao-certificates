@@ -1,6 +1,6 @@
 import React from 'react'
 import Web3 from 'web3'
-import ReactJson from 'react-json-view'
+import downloadjs from 'downloadjs'
 import {
   Avatar,
   Button,
@@ -10,7 +10,7 @@ import {
   Typography,
   withStyles
 } from '@material-ui/core'
-import { Link } from '@material-ui/icons'
+import { ArrowDownward, Link } from '@material-ui/icons'
 
 import checksumHelper from '../helpers/checksumHelper'
 import ethereumHelper from '../helpers/ethereumHelper'
@@ -165,6 +165,12 @@ class Verify extends React.Component {
     )
   }
 
+  download = () => {
+    const { json } = this.props
+    const stringified = JSON.stringify(json)
+    downloadjs(stringified, 'certificate.json', 'text/plain')
+  }
+
   render() {
     const {
       completedSteps,
@@ -253,8 +259,13 @@ class Verify extends React.Component {
               <Typography variant="h6">Verify by yourself</Typography>
             </Grid>
             <Grid item xs={12}>
-              <Typography paragraph>Explore the certificate JSON:</Typography>
-              <ReactJson src={json} collapsed={true} />
+              <Typography paragraph>Download the certificate JSON:</Typography>
+              <Button
+                onClick={() => this.download()}
+                color="primary"
+                variant="outlined">
+                <ArrowDownward className={classes.buttonIcon} />Download
+              </Button>
             </Grid>
             <Grid item xs={12}>
               <Typography>Etherscan links:</Typography>
