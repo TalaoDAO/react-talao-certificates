@@ -93,7 +93,7 @@ class Content extends React.Component {
               <img src={organization.image} alt={organization.name} className={classes.logo} />
               <Typography>
                 {
-                  'On ' + format(certificate.issuedOn, 'D MMMM YYYY') + ' by ' + responsible.name + ', ' + responsible.title
+                  'By ' + responsible.name + ', ' + responsible.title
                 }
               </Typography>
               <img src={responsible.image} alt={responsible.name} className={classes.signature} />
