@@ -43,6 +43,9 @@ class Content extends React.Component {
     return(
       <Grid container spacing={32} alignItems="center">
         <Grid item xs={12} lg={8} classes={{item: classes.gridItem}}>
+        <Typography variant="h4" paragraph>
+            {recipient.name}
+          </Typography>
           <Typography color="primary" variant="h4" paragraph>
             {certificate.title}
           </Typography>
@@ -88,7 +91,7 @@ class Content extends React.Component {
         </Grid>
         <Grid item xs={12} lg={4} classes={{item: classes.gridItem}}>
           <Card>
-            <CardHeader title={'Issued to ' + recipient.name + ' by ' + organization.name} />
+            <CardHeader title={'Issued by ' + organization.name} />
             <CardContent>
               <img src={organization.image} alt={organization.name} className={classes.logo} />
               <Typography>
