@@ -21,6 +21,12 @@ const styles = theme => ({
     textAlign: 'center',
     backgroundColor: '#edecec',
     paddingBottom: 0
+  },
+  logo: {
+    // width: '150px',
+    // height: '54px',
+    width: '200px',
+    height: 'auto'
   }
 })
 
@@ -45,7 +51,7 @@ class TalaoCertificate extends React.Component {
       <Card classes={{ root: classes.cardRoot }}>
         <CardHeader
           title={
-            <img src={certificateImage} alt="Talao certificate" />
+            <img src={certificateImage} alt="FreeDapp certificate" className={classes.logo} />
           }
           subheader={
             <Tabs
