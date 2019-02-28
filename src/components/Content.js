@@ -39,7 +39,7 @@ class Content extends React.Component {
   render() {
     const { classes, json } = this.props
     const { recipient, issuer, certificate } = json
-    const { organization, responsible } = issuer
+    const { organization, partner, responsible } = issuer
     return(
       <Grid container spacing={32} alignItems="center">
         <Grid item xs={12} lg={8} classes={{item: classes.gridItem}}>
@@ -94,6 +94,13 @@ class Content extends React.Component {
             <CardHeader title={'Issued by ' + organization.name} />
             <CardContent>
               <img src={organization.image} alt={organization.name} className={classes.logo} />
+              {
+                partner.text !== '' && (
+                  <Typography paragraph>
+                    <em>{partner.text}</em>
+                  </Typography>
+                )
+              }
               <Typography>
                 {
                   'By ' + responsible.name + ', ' + responsible.title
