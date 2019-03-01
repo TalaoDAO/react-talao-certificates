@@ -101,7 +101,12 @@ class Verify extends React.Component {
 
   getEtherscanAddress = (_address, _type = 'address') => {
     const { network } = this.props
-    return 'https://' + network + '.etherscan.io/' + _type + '/' + _address
+    if (network === 'mainnet') {
+      return 'https://etherscan.io/' + _type + '/' + _address
+    }
+    else {
+      return 'https://' + network + '.etherscan.io/' + _type + '/' + _address
+    }
   }
 
   getAvatarClass = _step => {
