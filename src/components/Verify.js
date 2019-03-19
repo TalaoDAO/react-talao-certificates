@@ -84,7 +84,7 @@ class Verify extends React.Component {
     const certificateIssuedEvents = await recipientContract.getPastEvents(
       'CertificateIssued', {
         filter: { checksum: '0x' + checksum },
-        fromBlock: 7270398,
+        fromBlock: ethereumHelper.getDeploymentBlock(network),
         toBlock: 'latest'
       }
     )
