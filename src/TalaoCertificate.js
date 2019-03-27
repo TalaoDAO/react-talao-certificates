@@ -9,25 +9,21 @@ import {
 
 import Content from './components/Content'
 import Verify from './components/Verify'
-import certificateImage from './assets/images/certificate.js'
+// import certificateImage from './assets/images/certificate.js'
 
 const styles = theme => ({
-  cardRoot: {
-    border: 'none',
-    boxShadow: 'none',
-    borderRadius: 0
-  },
   cardHeaderRoot: {
     textAlign: 'center',
     backgroundColor: '#edecec',
-    paddingBottom: 0
+    padding: 0,
+    marginBottom: theme.spacing.unit * 2
   },
-  logo: {
-    // width: '150px',
-    // height: '54px',
-    width: '200px',
-    height: 'auto'
-  }
+  // logo: {
+  //   // width: '150px',
+  //   // height: '54px',
+  //   width: '200px',
+  //   height: 'auto'
+  // }
 })
 
 class TalaoCertificate extends React.Component {
@@ -50,9 +46,9 @@ class TalaoCertificate extends React.Component {
     return (
       <Card classes={{ root: classes.cardRoot }}>
         <CardHeader
-          title={
-            <img src={certificateImage} alt="FreeDapp certificate" className={classes.logo} />
-          }
+          // title={
+          //   <img src={certificateImage} alt="FreeDapp certificate" className={classes.logo} />
+          // }
           subheader={
             <Tabs
               value={tab}

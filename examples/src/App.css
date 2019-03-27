@@ -1,0 +1,16 @@
+.Main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Content {
+  width: 66%;
+  padding: 20px;
+}
+
+@media screen and (max-width: 600px) {
+  .Content {
+    width: 100%;
+  }
+}

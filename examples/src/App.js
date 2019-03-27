@@ -1,6 +1,7 @@
 import React from 'react'
 import { AppBar, Button, Card, CardHeader, CircularProgress, Toolbar } from '@material-ui/core'
 import TalaoCertificate from '../../src/TalaoCertificate'
+import './App.css'
 
 export default class App extends React.Component {
 
@@ -37,19 +38,23 @@ export default class App extends React.Component {
             </Button>
           </Toolbar>
         </AppBar>
-        {
-          json ?
-            <TalaoCertificate json={json} />
-          :
-            <Card>
-              <CardHeader
-                title="Loading..."
-                avatar={
-                  <CircularProgress />
-                }>
-              </CardHeader>
-            </Card>
-        }
+        <div className="Main">
+          <div className="Content">
+            {
+              json ?
+                <TalaoCertificate json={json} />
+              :
+                <Card>
+                  <CardHeader
+                    title="Loading..."
+                    avatar={
+                      <CircularProgress />
+                    }>
+                  </CardHeader>
+                </Card>
+            }
+          </div>
+        </div>
       </React.Fragment>
     )
   }

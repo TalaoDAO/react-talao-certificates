@@ -16,11 +16,21 @@ const styles = theme => ({
   gridItem: {
     textAlign: 'center'
   },
+  listItemRoot: {
+    marginTop: theme.spacing.unit,
+    [theme.breakpoints.down('xs')]: {
+      display: 'block'
+    }
+  },
   button: {
     marginLeft: 'auto'
   },
   buttonIcon: {
     marginRight: theme.spacing.unit
+  },
+  cardRootIssuer: {
+    boxShadow: 'none',
+    border: '2px dotted #edecec'
   },
   logo: {
     maxWidth: '100%',
@@ -71,7 +81,7 @@ class Content extends React.Component {
             {
               certificate.ratings.map(
                 (rating, index) => (
-                  <ListItem key={index}>
+                  <ListItem key={index} classes={{root: classes.listItemRoot}}>
                     <ListItemText>
                       <Typography>
                         {rating.title}
@@ -90,7 +100,7 @@ class Content extends React.Component {
           </List>
         </Grid>
         <Grid item xs={12} lg={4} classes={{item: classes.gridItem}}>
-          <Card>
+          <Card classes={{root: classes.cardRootIssuer}}>
             <CardHeader title={'Issued by ' + organization.name} />
             <CardContent>
               <img src={organization.image} alt={organization.name} className={classes.logo} />
