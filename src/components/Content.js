@@ -40,7 +40,10 @@ const styles = theme => ({
   cardRootIssuer: {
     boxShadow: 'none',
     borderLeft: '2px solid #edecec',
-    borderRadius: 0
+    borderRadius: 0,
+    [theme.breakpoints.down('sm')]: {
+      borderLeft: 'none'
+    }
   },
   logo: {
     maxWidth: '100%',
@@ -103,19 +106,6 @@ class Content extends React.Component {
                     </Grid>
                     <Grid item xs={12} md={1}></Grid>
                   </React.Fragment>
-                  // <ListItem key={index} classes={{ root: classes.listItemRoot }}>
-                  //   <ListItemText>
-                  //     <Typography>
-                  //       {rating.title}
-                  //     </Typography>
-                  //   </ListItemText>
-                  //   <StarRatingComponent
-                  //     name={rating.title}
-                  //     value={rating.score}
-                  //     editing={false}
-                  //     starCount={5}
-                  //   />
-                  // </ListItem>
                 )
               )
             }
