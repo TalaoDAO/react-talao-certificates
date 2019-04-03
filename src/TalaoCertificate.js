@@ -2,32 +2,25 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {
   Card, CardHeader, CardContent,
+  IconButton,
   Tabs, Tab,
-  Typography,
   withStyles
 } from '@material-ui/core'
-
+import { Close } from '@material-ui/icons'
 import Content from './components/Content'
 import Verify from './components/Verify'
-// import certificateImage from './assets/images/certificate.js'
 
 const styles = theme => ({
   cardHeaderRoot: {
     textAlign: 'center',
     backgroundColor: '#edecec',
-    padding: 0,
+    paddingBottom: 0,
     marginBottom: theme.spacing.unit * 2
   },
   cardContentRoot: {
     marginTop: theme.spacing.unit * 4,
     marginBottom: theme.spacing.unit * 2
   }
-  // logo: {
-  //   // width: '150px',
-  //   // height: '54px',
-  //   width: '200px',
-  //   height: 'auto'
-  // }
 })
 
 class TalaoCertificate extends React.Component {
@@ -44,15 +37,21 @@ class TalaoCertificate extends React.Component {
 
   render() {
 
-    const { classes, json, network, preview } = this.props
+    const { classes, json, network, preview, onClose } = this.props
     const { tab } = this.state
 
     return (
       <Card classes={{ root: classes.cardRoot }}>
         <CardHeader
-          // title={
-          //   <img src={certificateImage} alt="FreeDapp certificate" className={classes.logo} />
-          // }
+          action={
+            this.props.onClose && (
+              <IconButton
+                onClick={() => onClose()}
+                aria-label="Close">
+                <Close />
+              </IconButton>
+            )
+          }
           subheader={
             <Tabs
               value={tab}

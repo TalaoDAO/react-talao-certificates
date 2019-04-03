@@ -42,7 +42,7 @@ export default class App extends React.Component {
           <div className="Content">
             {
               json ?
-                <TalaoCertificate json={json} />
+                <TalaoCertificate json={json} onClose={() => alert('onClose() prop')}/>
               :
                 <Card>
                   <CardHeader
