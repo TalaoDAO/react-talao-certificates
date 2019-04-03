@@ -10,7 +10,7 @@ import {
   Typography,
   withStyles
 } from '@material-ui/core'
-import { ArrowDownward, Link } from '@material-ui/icons'
+import { ArrowDownward, Done, Link } from '@material-ui/icons'
 
 import checksumHelper from '../helpers/checksumHelper'
 import ethereumHelper from '../helpers/ethereumHelper'
@@ -19,18 +19,25 @@ import workspaceJson from '../contracts/Workspace.json'
 
 const styles = theme => ({
   gridContainer: {
-    marginTop: theme.spacing.unit * 4,
-    textAlign: 'left'
+    // marginTop: theme.spacing.unit * 4,
+    // textAlign: 'left'
   },
   cardRoot: {
     marginLeft: 'auto',
     marginRight: 'auto'
   },
+  cardContentRoot: {
+    padding: 'unset',
+    paddingTop: theme.spacing.unit,
+    paddingRight: theme.spacing.unit * 4,
+    paddingBottom: theme.spacing.unit * 4,
+    paddingLeft: theme.spacing.unit * 9
+  },
   loaderContainer: {
     textAlign: 'center'
   },
   itemGridResult: {
-    textAlign: 'center'
+    // textAlign: 'center'
   },
   titleSuccess: {
     color: '#008000'
@@ -185,20 +192,33 @@ class Verify extends React.Component {
     const { classes, json, network } = this.props
 
     return (
-      <Grid container spacing={32} classes={{ container: classes.gridContainer }}>
-        <Grid item xs={12} classes={{ item: classes.itemGridResult }}>
-          <Typography variant="h2" className={this.getTitleClass()}>
-            {this.getTitleText()}
-          </Typography>
-        </Grid>
-        <Grid item xs={12} lg={9}>
+      <Grid container spacing={40} classes={{ container: classes.gridContainer }}>
+        <Grid item xs={12}>
           <Grid container spacing={32}>
-            <Grid item xs={12}>
+            <Grid item xs={12} md={1}></Grid>
+            <Grid item xs={12} md={10} classes={{ item: classes.itemGridResult }}>
+              <Typography variant="h1" className={this.getTitleClass()}>
+                {this.getTitleText()}
+              </Typography>
+            </Grid>
+            <Grid item xs={12} md={1}></Grid>
+          </Grid>
+        </Grid>
+        <Grid item xs={12} md={9}>
+          <Grid container spacing={32}>
+            <Grid item xs={12} md={1}></Grid>
+            <Grid item xs={12} md={10}>
               <Card classes={{ root: classes.cardRoot }}>
                 <CardHeader
-                  title="Recipient Ethereum account and contract"
-                  avatar={<Avatar className={this.getAvatarClass(1)}>1</Avatar>} />
-                <CardContent>
+                  title={
+                    <Typography variant="h2">Recipient Ethereum account and contract</Typography>
+                  }
+                  avatar={
+                    <Avatar className={this.getAvatarClass(1)}>
+                      {this.recipientHasCorrectContract() && <Done />}
+                    </Avatar>
+                  } />
+                <CardContent classes={{ root: classes.cardContentRoot }}>
                   {
                     completedSteps <= 0 ? (
                       <div className={classes.loaderContainer}>
@@ -214,12 +234,20 @@ class Verify extends React.Component {
                 </CardContent>
               </Card>
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} md={1}></Grid>
+            <Grid item xs={12} md={1}></Grid>
+            <Grid item xs={12} md={10}>
               <Card classes={{ root: classes.cardRoot }}>
                 <CardHeader
-                  title="Issuer Ethereum account and contract"
-                  avatar={<Avatar className={this.getAvatarClass(2)}>2</Avatar>} />
-                <CardContent>
+                  title={
+                    <Typography variant="h2">Issuer Ethereum account and contract</Typography>
+                  }
+                  avatar={
+                    <Avatar className={this.getAvatarClass(2)}>
+                      {this.issuerHasCorrectContract() && <Done />}
+                    </Avatar>
+                  } />
+                <CardContent classes={{ root: classes.cardContentRoot }}>
                   {
                     completedSteps <= 1 ? (
                       <div className={classes.loaderContainer}>
@@ -235,12 +263,20 @@ class Verify extends React.Component {
                 </CardContent>
               </Card>
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} md={1}></Grid>
+            <Grid item xs={12} md={1}></Grid>
+            <Grid item xs={12} md={10}>
               <Card classes={{ root: classes.cardRoot }}>
                 <CardHeader
-                  title="Existence of CertificateIssued event"
-                  avatar={<Avatar className={this.getAvatarClass(3)}>3</Avatar>} />
-                <CardContent>
+                  title={
+                    <Typography variant="h2">Existence of CertificateIssued event</Typography>
+                  }
+                  avatar={
+                    <Avatar className={this.getAvatarClass(3)}>
+                      {this.hasEvent() && <Done />}
+                    </Avatar>
+                  } />
+                <CardContent classes={{ root: classes.cardContentRoot }}>
                   {
                     completedSteps <= 2 ? (
                       <div className={classes.loaderContainer}>
@@ -256,12 +292,13 @@ class Verify extends React.Component {
                 </CardContent>
               </Card>
             </Grid>
+            <Grid item xs={12} md={1}></Grid>
           </Grid>
         </Grid>
-        <Grid item xs={12} lg={3}>
-          <Grid container spacing={32}>
+        <Grid item xs={12} md={3}>
+          <Grid container spacing={16}>
             <Grid item xs={12}>
-              <Typography variant="h6">Verify by yourself</Typography>
+              <Typography variant="h2">Verify by yourself</Typography>
             </Grid>
             <Grid item xs={12}>
               <Typography paragraph>Download the certificate JSON:</Typography>

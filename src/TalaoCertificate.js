@@ -18,6 +18,10 @@ const styles = theme => ({
     padding: 0,
     marginBottom: theme.spacing.unit * 2
   },
+  cardContentRoot: {
+    marginTop: theme.spacing.unit * 4,
+    marginBottom: theme.spacing.unit * 2
+  }
   // logo: {
   //   // width: '150px',
   //   // height: '54px',
@@ -72,7 +76,7 @@ class TalaoCertificate extends React.Component {
             root: classes.cardHeaderRoot
           }}>
         </CardHeader>
-        <CardContent>
+        <CardContent classes={{root: classes.cardContentRoot}}>
           {
             preview ? (
               <Content json={json} />
