@@ -30,7 +30,7 @@ const styles = theme => ({
 class TalaoCertificate extends React.Component {
 
   state = {
-    tab: 0
+    tab: 1
   }
 
   changeTab = (event, value) => {

@@ -6,6 +6,7 @@ import {
   Button,
   Card, CardHeader, CardContent,
   CircularProgress,
+  Hidden,
   Grid,
   Typography,
   withStyles
@@ -33,6 +34,9 @@ const styles = theme => ({
     paddingBottom: theme.spacing.unit * 4,
     paddingLeft: theme.spacing.unit * 9
   },
+  cardHeaderRoot: {
+    paddingBottom: 0
+  },
   loaderContainer: {
     textAlign: 'center'
   },
@@ -53,6 +57,9 @@ const styles = theme => ({
   },
   buttonIcon: {
     marginRight: theme.spacing.unit
+  },
+  links: {
+    textAlign: 'center'
   }
 })
 
@@ -193,20 +200,9 @@ class Verify extends React.Component {
 
     return (
       <Grid container spacing={40} classes={{ container: classes.gridContainer }}>
-        <Grid item xs={12}>
-          <Grid container spacing={32}>
-            <Grid item xs={12} md={1}></Grid>
-            <Grid item xs={12} md={10} classes={{ item: classes.itemGridResult }}>
-              <Typography variant="h1" className={this.getTitleClass()}>
-                {this.getTitleText()}
-              </Typography>
-            </Grid>
-            <Grid item xs={12} md={1}></Grid>
-          </Grid>
-        </Grid>
         <Grid item xs={12} md={9}>
           <Grid container spacing={32}>
-            <Grid item xs={12} md={1}></Grid>
+            <Hidden smDown><Grid item md={1}></Grid></Hidden>
             <Grid item xs={12} md={10}>
               <Card classes={{ root: classes.cardRoot }}>
                 <CardHeader
@@ -217,7 +213,8 @@ class Verify extends React.Component {
                     <Avatar className={this.getAvatarClass(1)}>
                       {this.recipientHasCorrectContract() && <Done />}
                     </Avatar>
-                  } />
+                  }
+                  classes={{root: classes.cardHeaderRoot}} />
                 <CardContent classes={{ root: classes.cardContentRoot }}>
                   {
                     completedSteps <= 0 ? (
@@ -234,8 +231,8 @@ class Verify extends React.Component {
                 </CardContent>
               </Card>
             </Grid>
-            <Grid item xs={12} md={1}></Grid>
-            <Grid item xs={12} md={1}></Grid>
+            <Hidden smDown><Grid item md={1}></Grid></Hidden>
+            <Hidden smDown><Grid item md={1}></Grid></Hidden>
             <Grid item xs={12} md={10}>
               <Card classes={{ root: classes.cardRoot }}>
                 <CardHeader
@@ -246,7 +243,8 @@ class Verify extends React.Component {
                     <Avatar className={this.getAvatarClass(2)}>
                       {this.issuerHasCorrectContract() && <Done />}
                     </Avatar>
-                  } />
+                  }
+                  classes={{root: classes.cardHeaderRoot}} />
                 <CardContent classes={{ root: classes.cardContentRoot }}>
                   {
                     completedSteps <= 1 ? (
@@ -263,8 +261,8 @@ class Verify extends React.Component {
                 </CardContent>
               </Card>
             </Grid>
-            <Grid item xs={12} md={1}></Grid>
-            <Grid item xs={12} md={1}></Grid>
+            <Hidden smDown><Grid item md={1}></Grid></Hidden>
+            <Hidden smDown><Grid item md={1}></Grid></Hidden>
             <Grid item xs={12} md={10}>
               <Card classes={{ root: classes.cardRoot }}>
                 <CardHeader
@@ -275,7 +273,8 @@ class Verify extends React.Component {
                     <Avatar className={this.getAvatarClass(3)}>
                       {this.hasEvent() && <Done />}
                     </Avatar>
-                  } />
+                  }
+                  classes={{root: classes.cardHeaderRoot}} />
                 <CardContent classes={{ root: classes.cardContentRoot }}>
                   {
                     completedSteps <= 2 ? (
@@ -292,13 +291,17 @@ class Verify extends React.Component {
                 </CardContent>
               </Card>
             </Grid>
-            <Grid item xs={12} md={1}></Grid>
+            <Hidden smDown><Grid item md={1}></Grid></Hidden>
           </Grid>
         </Grid>
         <Grid item xs={12} md={3}>
-          <Grid container spacing={16}>
+          <Grid container spacing={16} className={classes.links}>
             <Grid item xs={12}>
-              <Typography variant="h2">Verify by yourself</Typography>
+              <Typography variant="h1" className={this.getTitleClass()}>
+              {
+                this.getTitleText()
+              }
+              </Typography>
             </Grid>
             <Grid item xs={12}>
               <Typography paragraph>Download the certificate JSON:</Typography>

@@ -54,6 +54,40 @@ const styles = theme => ({
   },
   chipRoot: {
     margin: theme.spacing.unit
+  },
+  description: {
+    margin: theme.spacing.unit * 3
+  },
+  ratings: {
+    width: '75%',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    marginTop: theme.spacing.unit * 4,
+    display: 'flex',
+    flexDirection: 'column',
+    alignContent: 'center',
+    textAlign: 'left',
+    [theme.breakpoints.down('sm')]: {
+      width: '100%',
+      marginLeft: 0,
+      marginRight: 0,
+      textAlign: 'center'
+    }
+  },
+  rating: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignContent: 'space-around',
+    marginBottom: theme.spacing.unit * 2,
+    [theme.breakpoints.down('sm')]: {
+      flexDirection: 'column'
+    }
+  },
+  ratingTitle: {
+    flex: 3
+  },
+  ratingStars: {
+    flex: 1
   }
 })
 
@@ -69,12 +103,12 @@ class Content extends React.Component {
           <Typography color="primary" variant="h1" classes={{ root: classes.certificateTitle }}>
             {certificate.title}
           </Typography>
-          <Typography variant="h4">
+          <Typography variant="h4" paragraph>
             {
               certificate.duration + ' days, from ' + format(certificate.from, 'D MMMM YYYY') + ' to ' + format(certificate.to, 'D MMMM YYYY')
             }
           </Typography>
-          <Typography paragraph>
+          <Typography paragraph className={classes.description}>
             {certificate.description}
           </Typography>
           {
@@ -87,28 +121,30 @@ class Content extends React.Component {
               )
             )
           }
-          <Grid container spacing={16} classes={{container: classes.gridContainerRatings}}>
-            {
-              certificate.ratings.map(
-                (rating, index) => (
-                  <React.Fragment key={index}>
-                    <Grid item xs={12} md={1}></Grid>
-                    <Grid item xs={12} md={8}>
-                      <Typography>{rating.title}</Typography>
-                    </Grid>
-                    <Grid item xs={12} md={2}>
-                      <StarRatingComponent
-                        name={rating.title}
-                        value={rating.score}
-                        editing={false}
-                        starCount={5}
-                      />
-                    </Grid>
-                    <Grid item xs={12} md={1}></Grid>
-                  </React.Fragment>
+          <Grid item xs={12}>
+            <div className={classes.ratings}>
+              {
+                certificate.ratings.map(
+                  (rating, index) => (
+                    <div key={index} className={classes.rating}>
+                      <div className={classes.ratingTitle}>
+                        <Typography>
+                          {rating.title}
+                        </Typography>
+                      </div>
+                      <div className={classes.ratingStars}>
+                        <StarRatingComponent
+                          name={rating.title}
+                          value={rating.score}
+                          editing={false}
+                          starCount={5}
+                        />
+                      </div>
+                    </div>
+                  )
                 )
-              )
-            }
+              }
+            </div>
           </Grid>
         </Grid>
         <Grid item xs={12} lg={4} classes={{ item: classes.gridItem }}>
