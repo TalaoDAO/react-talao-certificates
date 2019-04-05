@@ -3,10 +3,14 @@ import PropTypes from 'prop-types'
 import {
   Card, CardHeader, CardContent,
   IconButton,
+  MuiThemeProvider,
   Tabs, Tab,
   withStyles
 } from '@material-ui/core'
 import { Close } from '@material-ui/icons'
+
+import theme from './providers/mui/theme'
+
 import Content from './components/Content'
 import Verify from './components/Verify'
 
@@ -41,54 +45,56 @@ class TalaoCertificate extends React.Component {
     const { tab } = this.state
 
     return (
-      <Card classes={{ root: classes.cardRoot }}>
-        <CardHeader
-          action={
-            this.props.onClose && (
-              <IconButton
-                onClick={() => onClose()}
-                aria-label="Close">
-                <Close />
-              </IconButton>
-            )
-          }
-          subheader={
-            <Tabs
-              value={tab}
-              onChange={(event, value) => this.changeTab(event, value)}
-              textColor="primary"
-              indicatorColor="primary"
-              centered>
-              <Tab
-                label={preview ? 'Preview' : 'View'}>
-              </Tab>
-              {
-                !preview && (
-                  <Tab
-                    label="Verify">
-                  </Tab>
-                )
-              }
-            </Tabs>
-          }
-          classes={{
-            root: classes.cardHeaderRoot
-          }}>
-        </CardHeader>
-        <CardContent classes={{root: classes.cardContentRoot}}>
-          {
-            preview ? (
-              <Content json={json} />
-            ) :
-              tab === 0 ? (
+      <MuiThemeProvider theme={theme}>
+        <Card classes={{ root: classes.cardRoot }}>
+          <CardHeader
+            action={
+              this.props.onClose && (
+                <IconButton
+                  onClick={() => onClose()}
+                  aria-label="Close">
+                  <Close />
+                </IconButton>
+              )
+            }
+            subheader={
+              <Tabs
+                value={tab}
+                onChange={(event, value) => this.changeTab(event, value)}
+                textColor="primary"
+                indicatorColor="primary"
+                centered>
+                <Tab
+                  label={preview ? 'Preview' : 'View'}>
+                </Tab>
+                {
+                  !preview && (
+                    <Tab
+                      label="Verify">
+                    </Tab>
+                  )
+                }
+              </Tabs>
+            }
+            classes={{
+              root: classes.cardHeaderRoot
+            }}>
+          </CardHeader>
+          <CardContent classes={{root: classes.cardContentRoot}}>
+            {
+              preview ? (
                 <Content json={json} />
-              )
-              : (
-                <Verify json={json} network={network} />
-              )
-          }
-        </CardContent>
-      </Card>
+              ) :
+                tab === 0 ? (
+                  <Content json={json} />
+                )
+                : (
+                  <Verify json={json} network={network} />
+                )
+            }
+          </CardContent>
+        </Card>
+      </MuiThemeProvider>
     )
   }
 }
