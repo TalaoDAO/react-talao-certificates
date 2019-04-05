@@ -87,7 +87,8 @@ const styles = theme => ({
     flex: 3
   },
   ratingStars: {
-    flex: 1
+    flex: 1,
+    textAlign: 'center'
   }
 })
 

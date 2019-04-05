@@ -6,6 +6,7 @@
 
 .Content {
   width: 66%;
+  max-width: 960px;
   padding: 20px;
 }
 

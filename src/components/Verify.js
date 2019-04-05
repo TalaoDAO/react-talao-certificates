@@ -59,7 +59,9 @@ const styles = theme => ({
     marginRight: theme.spacing.unit
   },
   links: {
-    textAlign: 'center'
+    [theme.breakpoints.down('sm')]: {
+      textAlign: 'center'
+    }
   }
 })
 
