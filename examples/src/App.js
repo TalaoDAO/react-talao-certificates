@@ -1,5 +1,13 @@
 import React from 'react'
-import { AppBar, Button, Card, CardHeader, CircularProgress, Toolbar } from '@material-ui/core'
+import {
+  AppBar,
+  Button,
+  Card, CardHeader,
+  CircularProgress,
+  Divider,
+  Toolbar,
+  Typography
+} from '@material-ui/core'
 import TalaoCertificate from '../../src/TalaoCertificate'
 import './App.css'
 
@@ -14,8 +22,8 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
-    const url1 = 'https://raw.githubusercontent.com/TalaoDAO/react-talao-certificates/master/examples/data/version1.json'
-    this.fetchJson(url1, 'v1')
+    // const url1 = 'https://raw.githubusercontent.com/TalaoDAO/react-talao-certificates/master/examples/data/version1.json'
+    // this.fetchJson(url1, 'v1')
     const url2 = 'https://raw.githubusercontent.com/TalaoDAO/react-talao-certificates/master/examples/data/version2.json'
     this.fetchJson(url2, 'v2')
   }
@@ -29,7 +37,7 @@ export default class App extends React.Component {
   }
 
   render() {
-    const { v1, v2 } = this.state
+    const { v2 } = this.state
     return (
       <React.Fragment>
         <AppBar position="static">
@@ -45,20 +53,7 @@ export default class App extends React.Component {
           <div className="Content">
             {
               v2 ?
-                <TalaoCertificate json={v2} onClose={() => alert('onClose() prop')} />
-              :
-                <Card>
-                  <CardHeader
-                    title="Loading..."
-                    avatar={
-                      <CircularProgress />
-                    }>
-                  </CardHeader>
-                </Card>
-            }
-            {
-              v1 ?
-                <TalaoCertificate json={v1} onClose={() => alert('onClose() prop')} />
+                <TalaoCertificate json={v2} network='rinkeby' onClose={() => alert('onClose() prop')} />
               :
                 <Card>
                   <CardHeader

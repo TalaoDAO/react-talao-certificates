@@ -9,7 +9,7 @@ import {
 } from '@material-ui/core'
 import { Link } from '@material-ui/icons'
 import StarRatingComponent from 'react-star-rating-component'
-import format from 'date-fns/format'
+import { differenceInCalendarDays, format } from 'date-fns'
 
 const styles = theme => ({
   gridContainerRoot: {
@@ -98,17 +98,25 @@ class Content extends React.Component {
     const { classes, json } = this.props
     const { recipient, issuer, certificate } = json
     const { organization, partner, responsible } = issuer
+    const durationInDays = differenceInCalendarDays(new Date(certificate.to), new Date(certificate.from))
     return (
       <Grid container spacing={32} alignItems="center" classes={{ container: classes.gridContainerRoot }}>
         <Grid item xs={12} lg={8} classes={{ item: classes.gridItem }}>
           <Typography color="primary" variant="h1" classes={{ root: classes.certificateTitle }}>
             {certificate.title}
           </Typography>
-          <Typography variant="h4" paragraph>
+          <Typography variant="h4">
             {
-              certificate.duration + ' days, from ' + format(certificate.from, 'D MMMM YYYY') + ' to ' + format(certificate.to, 'D MMMM YYYY')
+              durationInDays + ' days, from ' + format(certificate.from, 'D MMMM YYYY') + ' to ' + format(certificate.to, 'D MMMM YYYY')
             }
           </Typography>
+          {
+            certificate.location && (
+              <Typography variant="h4">
+                {certificate.location}
+              </Typography>
+            )
+          }
           <Typography paragraph className={classes.description}>
             {certificate.description}
           </Typography>
@@ -153,7 +161,7 @@ class Content extends React.Component {
             <CardHeader
               title={
                 <Typography variant="h2">
-                  {'Issued by ' + organization.name + ' for ' + recipient.name}
+                  {'Issued by ' + organization.name + ' for ' + recipient.first_name + ' ' + recipient.last_name}
                 </Typography>
               } />
             <CardContent>
