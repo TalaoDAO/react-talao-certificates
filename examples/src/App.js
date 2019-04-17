@@ -44,8 +44,8 @@ export default class App extends React.Component {
         <div className="Main">
           <div className="Content">
             {
-              v1 ?
-                <TalaoCertificate json={v1} onClose={() => alert('onClose() prop')}/>
+              v2 ?
+                <TalaoCertificate json={v2} onClose={() => alert('onClose() prop')} />
               :
                 <Card>
                   <CardHeader
@@ -56,11 +56,9 @@ export default class App extends React.Component {
                   </CardHeader>
                 </Card>
             }
-          </div>
-          <div className="Content">
             {
-              v2 ?
-                <TalaoCertificate json={v2} onClose={() => alert('onClose() prop')}/>
+              v1 ?
+                <TalaoCertificate json={v1} onClose={() => alert('onClose() prop')} />
               :
                 <Card>
                   <CardHeader
