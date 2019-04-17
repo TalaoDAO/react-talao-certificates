@@ -11,7 +11,8 @@ import { Close } from '@material-ui/icons'
 
 import theme from './providers/mui/theme'
 
-import Content from './components/Content'
+import ContentVersion1 from './components/ContentVersion1'
+import ContentVersion2 from './components/ContentVersion2'
 import Verify from './components/Verify'
 
 const styles = theme => ({
@@ -26,6 +27,17 @@ const styles = theme => ({
     marginBottom: theme.spacing.unit * 2
   }
 })
+
+function Content({ json, version }) {
+  switch (version) {
+    case 1:
+      return <ContentVersion1 json={json} />
+    case 2:
+      return <ContentVersion2 json={json} />
+    default:
+      return <ContentVersion2 json={json} />
+  }
+}
 
 class TalaoCertificate extends React.Component {
 
@@ -83,10 +95,10 @@ class TalaoCertificate extends React.Component {
           <CardContent classes={{root: classes.cardContentRoot}}>
             {
               preview ? (
-                <Content json={json} />
+                <Content version={json.version} json={json} />
               ) :
                 tab === 0 ? (
-                  <Content json={json} />
+                  <Content version={json.version} json={json} />
                 )
                 : (
                   <Verify json={json} network={network} />
