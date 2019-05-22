@@ -209,7 +209,7 @@ class Verify extends React.Component {
               <Card classes={{ root: classes.cardRoot }}>
                 <CardHeader
                   title={
-                    <Typography variant="h2">Recipient Ethereum account and contract</Typography>
+                    <Typography variant="h2">Recipient identity</Typography>
                   }
                   avatar={
                     <Avatar className={this.getAvatarClass(1)}>
@@ -226,7 +226,7 @@ class Verify extends React.Component {
                     )
                       : (
                         <Typography>
-                          We take the recipient Ethereum account address in the certificate, and compare the address of the smart contract in the certificate and in Talao Foundation.
+                          We compare the smart contract address in the certificate with the one stored in Talao foundation to verify the recipient identity.
                         </Typography>
                       )
                   }
@@ -239,7 +239,7 @@ class Verify extends React.Component {
               <Card classes={{ root: classes.cardRoot }}>
                 <CardHeader
                   title={
-                    <Typography variant="h2">Issuer Ethereum account and contract</Typography>
+                    <Typography variant="h2">Issuer identity</Typography>
                   }
                   avatar={
                     <Avatar className={this.getAvatarClass(2)}>
@@ -256,7 +256,7 @@ class Verify extends React.Component {
                     )
                       : (
                         <Typography>
-                          We take the issuer Ethereum account address in the certificate, and compare the address of the smart contract in the certificate and in Talao Foundation.
+                          We compare the smart contract address in the certificate with the one stored in Talao foundation to verify the issuer identity.
                         </Typography>
                       )
                   }
@@ -269,7 +269,7 @@ class Verify extends React.Component {
               <Card classes={{ root: classes.cardRoot }}>
                 <CardHeader
                   title={
-                    <Typography variant="h2">Existence of CertificateIssued event</Typography>
+                    <Typography variant="h2">Content validity</Typography>
                   }
                   avatar={
                     <Avatar className={this.getAvatarClass(3)}>
@@ -286,7 +286,7 @@ class Verify extends React.Component {
                     )
                       : (
                         <Typography>
-                          We compute the SHA 256 checksum of the certificate and we look in the smart contract for a DocumentIssued event with this checksum and the issuer smart contract.
+                          We compute the SHA 256 checksum of the certificate and compare it with the one stored when the certificate was issued. If anything changed in the certificate, the checksums will be different.
                       </Typography>
                       )
                   }

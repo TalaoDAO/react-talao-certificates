@@ -1,6 +1,6 @@
 {
   "name": "react-talao-certificates",
-  "version": "1.0.19",
+  "version": "1.0.20",
   "description": "React component to display and verify Talao certificates",
   "license": "MIT",
   "main": "dist/index.js",
