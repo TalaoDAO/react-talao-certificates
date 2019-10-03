@@ -81,7 +81,6 @@ class Verify extends React.Component {
     const { ethereum_account, ethereum_contract } = recipient
     const { organization } = issuer
     const infuraEndpoint = projectId ? 'wss://' + network + '.infura.io/ws/v3/' + projectId : 'wss://' + network + '.infura.io/ws'
-    console.log(infuraEndpoint)
     const web3 = new Web3(infuraEndpoint)
     const foundationContract = new web3.eth.Contract(
       foundationJson.abi,
