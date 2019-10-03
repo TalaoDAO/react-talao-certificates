@@ -76,11 +76,13 @@ class Verify extends React.Component {
   }
 
   async componentDidMount() {
-    const { json, network } = this.props
+    const { json, network, projectId } = this.props
     const { recipient, issuer } = json
     const { ethereum_account, ethereum_contract } = recipient
     const { organization } = issuer
-    const web3 = new Web3('wss://' + network + '.infura.io/ws')
+    const infuraEndpoint = projectId ? 'wss://' + network + '.infura.io/ws/v3/' + projectId : 'wss://' + network + '.infura.io/ws'
+    console.log(infuraEndpoint)
+    const web3 = new Web3(infuraEndpoint)
     const foundationContract = new web3.eth.Contract(
       foundationJson.abi,
       foundationJson.networks[ethereumHelper.getNetworkId(network)].address

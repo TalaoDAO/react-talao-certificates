@@ -53,7 +53,7 @@ class TalaoCertificate extends React.Component {
 
   render() {
 
-    const { classes, json, network, preview, onClose } = this.props
+    const { classes, json, network, projectId, preview, onClose } = this.props
     const { tab } = this.state
 
     return (
@@ -101,7 +101,7 @@ class TalaoCertificate extends React.Component {
                   <Content version={json.version} json={json} />
                 )
                 : (
-                  <Verify json={json} network={network} />
+                  <Verify json={json} network={network} projectId={projectId} />
                 )
             }
           </CardContent>
